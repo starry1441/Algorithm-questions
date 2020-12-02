@@ -20,6 +20,30 @@
 //YES
 //(注意，在该题中整数 / 整数，取结果的整数部分，例如1 / 4 = 0)
 
+//判断输入数据合法性
+int JudgeNum(int n,int** arr)
+{
+	//正整数，N<1000
+	if (n < 1 || n >= 1000)
+	{
+		printf("输入n不合法\n");
+	}
+	//-1e5 <= A、B、C <= 1e5
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			if (arr[i][j]<-100000 || arr[i][j]>100000)
+			{
+				printf("输入数据不合法,请重新运行程序\n");
+				return 0;
+			}
+		}
+	}
+	return 0;
+}
+
+//可选的运算符
 int Operation(int a, int b,int input)
 {
 	switch (input)
@@ -45,22 +69,9 @@ int Operation(int a, int b,int input)
 	return 0;
 }
 
-int main()
+//分组运算
+void ConposeOperation(int **arr,int n)
 {
-	int n=0;
-	scanf("%d", &n);
-	int **arr = NULL;
-	//动态开辟行内存
-	arr = (int**)malloc(1000*sizeof(int*));
-	for (int i = 0; i < 3; i++)
-	{
-		//动态开辟列内存
-		arr[i] = (char*)malloc(sizeof(int)*3);
-	}
-	for (int i = 0; i < n; i++)
-	{
-		scanf("%d %d %d", &arr[i][0], &arr[i][1],&arr[i][2]);
-	}
 	int num1 = 0;
 	int num2 = 0;
 	int input1 = 0;
@@ -80,7 +91,7 @@ int main()
 					printf("Yes\n");
 					break;
 				}
-			}	
+			}
 			if (num1 == 24 || num2 == 24)
 			{
 				break;
@@ -91,6 +102,26 @@ int main()
 			printf("No\n");
 		}
 	}
+}
+
+int main()
+{
+	int n=0;
+	scanf("%d", &n);
+	int **arr = NULL;
+	//动态开辟行内存
+	arr = (int**)malloc(1000*sizeof(int*));
+	for (int i = 0; i < 3; i++)
+	{
+		//动态开辟列内存
+		arr[i] = (int*)malloc(sizeof(int)*3);
+	}
+	for (int i = 0; i < n; i++)
+	{
+		scanf("%d %d %d", &arr[i][0], &arr[i][1],&arr[i][2]);
+	}
+	JudgeNum(n, arr);
+	ConposeOperation(arr, n);
 	free(arr);
 	arr = NULL;
 	return 0;
